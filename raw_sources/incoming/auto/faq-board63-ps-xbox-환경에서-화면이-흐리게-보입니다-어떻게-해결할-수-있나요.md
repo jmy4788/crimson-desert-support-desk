@@ -1,16 +1,13 @@
 ---
 source_type: faq
-title: 'FAQ: 플랫폼/시스템 관련 붉은사막은 어떤 플랫폼에서 플레이할 수 있나요? 붉은사막은 현재 스팀, 에픽 게임즈 스토어, 플레이스테이션®5, 플레이스테이션®5 프로,...'
+title: 'FAQ: PS/XBOX 환경에서 화면이 흐리게 보입니다. 어떻게 해결할 수 있나요?'
 source_url: https://crimsondesert.pearlabyss.com/ko-KR/News/Notice/Detail?_boardNo=63
 published_at: '2026-03-12T15:30:00+00:00'
-fetched_at: '2026-03-31T12:17:11.682573+00:00'
-question: 플랫폼/시스템 관련 붉은사막은 어떤 플랫폼에서 플레이할 수 있나요? 붉은사막은 현재 스팀, 에픽 게임즈 스토어, 플레이스테이션®5, 플레이스테이션®5 프로,...
-answer: 플랫폼/시스템 관련 붉은사막은 어떤 플랫폼에서 플레이할 수 있나요? 붉은사막은 현재 스팀, 에픽 게임즈 스토어, 플레이스테이션®5, 플레이스테이션®5 프로, 엑스박스 시리즈 X|S, 엑스박스 PC, Mac 앱 스토어, 스팀 Mac, 그리고 지포스 나우에서 플레이 가능합니다. 붉은사막의 PC, 콘솔 그리고 Mac 성능 정보와 요구 사양은 무엇인가요? 붉은사막의 PC, 콘솔 그리고 Mac에서의 성능 및 하드웨어 관련 정보는 PC, 콘솔, MAC 성능 정보 안내...
+fetched_at: '2026-03-31T13:19:17.919490+00:00'
+question: PS/XBOX 환경에서 화면이 흐리게 보입니다. 어떻게 해결할 수 있나요?
+answer: 사용 중인 HDMI 케이블이 HDMI 2.1을 지원하지 않는 경우, 화면이 흐리게 보일 수 있습니다. 보다 원활한 화면 출력 환경을 위해 HDMI 2.1을 지원하는 케이블 사용을 권장드립니다. Xbox PC App에서 실행이 안됩니다. 해당 현상은 Xbox 개발팀과 붉은사막 개발팀이 공동으로 확인하고 있으며, 아래 방법을 통해 임시 조치 가능합니다. 1. Microsoft Store에 접속합니다. 2. 다운로드 메뉴로 이동한 뒤 업데이트 확인을 클릭합니다. 3. Gaming Services 앱 옆에 업데이트 버튼이 표시되면 클릭합니다. 업데이트가 보이지 않는 경우에는 Windows 키 + R을 눌러 실행 창을 연 뒤, 아래 내용을 붙여넣어 주시면, Microsoft Store에서 해당 다운로드 페이지가 열립니다. ms-windows-store://pdp/?productid=9MWPM2CQNLHN 4. 위 방법을 완료한 후, 붉은사막을 실행해주세요.
 tags:
-- patch
-- graphics
 - install
-- controller
 related_issue_slugs: []
 related_patch_versions: []
 ---

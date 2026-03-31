@@ -3,7 +3,7 @@ source_type: patch_note
 title: 패치 노트 버전 1.01.02 (Steam 핫픽스)
 source_url: https://crimsondesert.pearlabyss.com/ko-KR/News/Notice/Detail?_boardNo=78
 published_at: '2026-03-30T10:05:00+00:00'
-fetched_at: '2026-03-31T12:17:06.548392+00:00'
+fetched_at: '2026-03-31T13:19:12.174340+00:00'
 version: 1.01.02
 platforms:
 - PC
@@ -14,6 +14,21 @@ details:
   items:
   - NVIDIA Ray Reconstruction 및 DLSS 관련 화질이 일부 개선되었으며, 관련 사항은 앞으로도 지속적으로 확인해 나갈 예정입니다. 특정 환경에서 화면이 흐릿하게 보이거나, 하늘과 구름 경계 및 굴뚝 연기 효과가 주변 오브젝트와 겹칠 때 깜빡이던 현상이 개선되었습니다.
   - 알려진 문제점은 아래 링크에서 확인하실 수 있습니다. [알려진 문제점 확인하기]
+landing:
+  title: 패치 노트 버전 1.01.02 (Steam 핫픽스)
+  meta_description: 안녕하세요 회색갈기 여러분. 붉은사막입니다.1.01.02 패치 사항이 Steam에 적용되어 안내해 드립니다. 1.01.02 패치 상세 내역NVIDIA Ray Reconstruction 및 DLSS 관련 화질이 일부 개선되었으며, 관련 사항은 앞으로도 지속적으로 확...
+  canonical_path: /ko/patches/1.01.02
+  body_markdown: '안녕하세요 회색갈기 여러분. 붉은사막입니다. 1.01.02 패치 사항이 Steam에 적용되어 안내해 드립니다. 1.01.02 패치 상세 내역 NVIDIA Ray Reconstruction 및 DLSS 관련 화질이 일부 개선되었으며, 관련 사항은 앞으로도 지속적으로 확인해 나갈 예정입니다. 특정 환경에서 화면이 흐릿하...
+
+
+    - NVIDIA Ray Reconstruction 및 DLSS 관련 화질이 일부 개선되었으며, 관련 사항은 앞으로도 지속적으로 확인해 나갈 예정입니다. 특정 환경에서 화면이 흐릿하게 보이거나, 하늘과 구름 경계 및 굴뚝 연기 효과가 주변 오브젝트와 겹칠 때 깜빡이던 현상이 개선되었습니다.
+
+    - 알려진 문제점은 아래 링크에서 확인하실 수 있습니다. [알려진 문제점 확인하기]'
+  faq_items:
+  - question: 이번 패치에서 먼저 봐야 할 것은 무엇인가요?
+    answer: NVIDIA Ray Reconstruction 및 DLSS 관련 화질이 일부 개선되었으며, 관련 사항은 앞으로도 지속적으로 확인해 나갈 예정입니다. 특정 환경에서 화면이 흐릿하게 보이거나, 하늘과 구름 경계 및 굴뚝 연기 효과가 주변 오브젝트와 겹칠 때 깜빡이던 현상이 개선되었습니다.
+  - question: 가장 눈에 띄는 추가 변경점은 무엇인가요?
+    answer: 알려진 문제점은 아래 링크에서 확인하실 수 있습니다. [알려진 문제점 확인하기]
 ---
 안녕하세요 회색갈기 여러분. 붉은사막입니다.
 1.01.02

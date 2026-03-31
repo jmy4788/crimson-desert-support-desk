@@ -3,7 +3,7 @@ source_type: patch_note
 title: 패치 노트 버전 1.01.03 (전 플랫폼 핫픽스)
 source_url: https://crimsondesert.pearlabyss.com/ko-KR/News/Notice/Detail?_boardNo=79
 published_at: '2026-03-31T03:05:00+00:00'
-fetched_at: '2026-03-31T12:17:05.797387+00:00'
+fetched_at: '2026-03-31T13:19:11.470468+00:00'
 version: 1.01.03
 platforms:
 - PC
@@ -17,6 +17,21 @@ details:
   items:
   - 전투 중 간헐적으로 일부 보스가 동작을 멈추던 현상이 수정되었습니다.
   - 알려진 문제점은 아래 링크에서 확인하실 수 있습니다. [알려진 문제점 확인하기]
+landing:
+  title: 패치 노트 버전 1.01.03 (전 플랫폼 핫픽스)
+  meta_description: 안녕하세요 회색갈기 여러분. 붉은사막입니다.1.01.03 패치 사항을 안내해드립니다. 업데이트 일정PlayStation, Xbox, Epic Games Store, Mac의 경우, 1.01.03 패치는 추후 별도의 일정으로 진행될 예정입니다.모든 패치 적용이 완료...
+  canonical_path: /ko/patches/1.01.03
+  body_markdown: '안녕하세요 회색갈기 여러분. 붉은사막입니다. 1.01.03 패치 사항을 안내해드립니다. 업데이트 일정 PlayStation, Xbox, Epic Games Store, Mac의 경우, 1.01.03 패치는 추후 별도의 일정으로 진행될 예정입니다. 모든 패치 적용이 완료되면 본 공지를 통해 다시 안내드릴 예정이오니,...
+
+
+    - 전투 중 간헐적으로 일부 보스가 동작을 멈추던 현상이 수정되었습니다.
+
+    - 알려진 문제점은 아래 링크에서 확인하실 수 있습니다. [알려진 문제점 확인하기]'
+  faq_items:
+  - question: 이번 패치에서 먼저 봐야 할 것은 무엇인가요?
+    answer: 전투 중 간헐적으로 일부 보스가 동작을 멈추던 현상이 수정되었습니다.
+  - question: 가장 눈에 띄는 추가 변경점은 무엇인가요?
+    answer: 알려진 문제점은 아래 링크에서 확인하실 수 있습니다. [알려진 문제점 확인하기]
 ---
 안녕하세요 회색갈기 여러분. 붉은사막입니다.
 1.01.03

@@ -129,7 +129,12 @@ describe('frontend pages', () => {
             meta_description: 'desc',
             body_markdown: 'body',
             canonical_path: '/ko/issues/blurry-screen',
-            faq_items: [],
+            faq_items: [
+              {
+                question: '먼저 무엇을 확인해야 하나요?',
+                answer: '옵션과 패치 버전을 먼저 확인합니다.',
+              },
+            ],
             updated_at: '2026-03-30T18:10:00+09:00',
           },
           escalation_recommendation: 'report',
@@ -148,6 +153,8 @@ describe('frontend pages', () => {
     expect(await screen.findByText('권장 조치 순서')).toBeInTheDocument();
     expect(screen.getByText('공식 안내')).toBeInTheDocument();
     expect(screen.getByText('report')).toBeInTheDocument();
+    expect(screen.getByText('핵심 질문')).toBeInTheDocument();
+    expect(screen.getByText('먼저 무엇을 확인해야 하나요?')).toBeInTheDocument();
   });
 
   it('submits settings doctor form and renders actions', async () => {

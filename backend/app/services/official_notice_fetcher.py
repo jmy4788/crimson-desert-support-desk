@@ -181,6 +181,7 @@ def build_patch_document(detail: NoticeDetail) -> GeneratedDocument:
                 "items": detail_lines or [summarize_text(detail.raw_text, limit=160)],
             }
         ],
+        "landing": build_patch_landing_payload(detail, version, detail_lines),
     }
     return GeneratedDocument(
         filename=f"patch-board{detail.board_no}-{slugify(version)}.md",
@@ -219,6 +220,7 @@ def build_known_issue_documents(detail: NoticeDetail) -> list[GeneratedDocument]
             "escalation_needed": requires_escalation(line),
             "related_patch_versions": [],
             "workaround_steps": [],
+            "landing": build_issue_landing_payload(detail, slug, title, line),
         }
         documents.append(
             GeneratedDocument(
@@ -233,27 +235,38 @@ def build_known_issue_documents(detail: NoticeDetail) -> list[GeneratedDocument]
 
 
 def build_faq_documents(detail: NoticeDetail) -> list[GeneratedDocument]:
-    question = normalize_faq_question(detail.title, detail.raw_text)
-    payload = {
-        "source_type": "faq",
-        "title": f"FAQ: {question}",
-        "source_url": detail.url,
-        "published_at": detail.published_at,
-        "fetched_at": detail.fetched_at,
-        "question": question,
-        "answer": summarize_text(detail.meta_description or detail.raw_text, limit=260),
-        "tags": detect_faq_tags(f"{detail.title}\n{detail.raw_text}"),
-        "related_issue_slugs": [],
-        "related_patch_versions": [],
-    }
-    return [
-        GeneratedDocument(
-            filename=f"faq-board{detail.board_no}-{slugify(question)[:60] or f'faq-{detail.board_no}'}.md",
-            source_type="faq",
-            title=payload["title"],
-            content=build_frontmatter_document(payload, detail.raw_text),
+    faq_pairs = extract_faq_pairs(detail.raw_text)
+    if not faq_pairs:
+        question = normalize_faq_question(detail.title, detail.raw_text)
+        faq_pairs = [(question, detail.meta_description or detail.raw_text)]
+
+    documents: list[GeneratedDocument] = []
+    used_names: set[str] = set()
+    for index, (question_text, answer_text) in enumerate(faq_pairs, start=1):
+        question = normalize_faq_question(question_text, detail.raw_text)
+        answer = normalize_faq_answer(answer_text)
+        slug = ensure_unique_slug(slugify(question)[:60] or f"faq-{detail.board_no}-{index}", used_names)
+        payload = {
+            "source_type": "faq",
+            "title": f"FAQ: {question}",
+            "source_url": detail.url,
+            "published_at": detail.published_at,
+            "fetched_at": detail.fetched_at,
+            "question": question,
+            "answer": answer,
+            "tags": detect_faq_tags(f"{question}\n{answer}"),
+            "related_issue_slugs": [],
+            "related_patch_versions": [],
+        }
+        documents.append(
+            GeneratedDocument(
+                filename=f"faq-board{detail.board_no}-{slug}.md",
+                source_type="faq",
+                title=payload["title"],
+                content=build_frontmatter_document(payload, detail.raw_text),
+            )
         )
-    ]
+    return documents
 
 
 def build_frontmatter_document(payload: dict[str, object], raw_text: str) -> str:
@@ -363,6 +376,127 @@ def normalize_faq_question(title: str, raw_text: str) -> str:
     if cleaned:
         return cleaned
     return summarize_text(raw_text, limit=90) or "공식 FAQ"
+
+
+def normalize_faq_answer(text: str) -> str:
+    cleaned_lines = [_clean_text(line) for line in text.splitlines()]
+    filtered = [line for line in cleaned_lines if line and line not in {"[", "]", "링크", "바로 가기"}]
+    return " ".join(filtered).strip()
+
+
+def extract_faq_pairs(raw_text: str) -> list[tuple[str, str]]:
+    pairs: list[tuple[str, str]] = []
+    current_question: str | None = None
+    current_answer_lines: list[str] = []
+
+    for raw_line in raw_text.splitlines():
+        line = _clean_text(raw_line)
+        if not line or line in {"[", "]", "링크", "바로 가기"}:
+            continue
+        if is_heading_line(line):
+            continue
+        if is_faq_question(line):
+            if current_question is not None:
+                pairs.append((current_question, "\n".join(current_answer_lines).strip()))
+            current_question = line
+            current_answer_lines = []
+            continue
+        if current_question is not None:
+            current_answer_lines.append(line)
+
+    if current_question is not None:
+        pairs.append((current_question, "\n".join(current_answer_lines).strip()))
+
+    return [(question, answer) for question, answer in pairs if question and answer]
+
+
+def is_faq_question(text: str) -> bool:
+    lowered = text.casefold()
+    if "://" in text or lowered.startswith(("ms-windows-store:", "http://", "https://")):
+        return False
+    if "?" in text or "？" in text:
+        return True
+    return any(
+        lowered.endswith(ending)
+        for ending in (
+            "지원하나요",
+            "되나요",
+            "있나요",
+            "인가요",
+            "해야 하나요",
+            "가능한가요",
+            "받을 수 있나요",
+            "확인하나요",
+            "안됩니다",
+        )
+    )
+
+
+def is_heading_line(text: str) -> bool:
+    if len(text) > 20:
+        return False
+    if any(char in text for char in "?!.:;[]()"):
+        return False
+    lowered = text.casefold()
+    return any(
+        keyword in lowered
+        for keyword in (
+            "플랫폼",
+            "시스템",
+            "고객지원",
+            "기능",
+            "에디션",
+            "보너스",
+            "아이템",
+        )
+    )
+
+
+def build_patch_landing_payload(detail: NoticeDetail, version: str, detail_lines: list[str]) -> dict[str, object]:
+    top_lines = detail_lines[:3] or [summarize_text(detail.raw_text, limit=160)]
+    faq_items = [
+        {
+            "question": "이번 패치에서 먼저 봐야 할 것은 무엇인가요?",
+            "answer": top_lines[0],
+        }
+    ]
+    if len(top_lines) > 1:
+        faq_items.append(
+            {
+                "question": "가장 눈에 띄는 추가 변경점은 무엇인가요?",
+                "answer": top_lines[1],
+            }
+        )
+
+    body_lines = "\n".join(f"- {line}" for line in top_lines)
+    return {
+        "title": detail.title,
+        "meta_description": summarize_text(detail.meta_description or detail.raw_text, limit=150),
+        "canonical_path": f"/ko/patches/{version}",
+        "body_markdown": f"{summarize_text(detail.raw_text, limit=180)}\n\n{body_lines}",
+        "faq_items": faq_items,
+    }
+
+
+def build_issue_landing_payload(detail: NoticeDetail, slug: str, title: str, line: str) -> dict[str, object]:
+    workaround_hint = "최신 패치 적용 여부와 동일 증상 재현 조건을 먼저 기록해 두세요."
+    if "xbox" in line.casefold():
+        workaround_hint = "Xbox 관련 계정 동기화와 앱 업데이트 여부를 먼저 확인하세요."
+    if any(keyword in line.casefold() for keyword in ("blur", "흐리", "뭉개", "flicker", "깜빡")):
+        workaround_hint = "그래픽 옵션과 업스케일러 변경 전후를 같은 장면에서 비교하는 것이 좋습니다."
+
+    return {
+        "title": title,
+        "meta_description": summarize_text(detail.meta_description or line, limit=150),
+        "canonical_path": f"/ko/issues/{slug}",
+        "body_markdown": f"{summarize_text(line, limit=180)}\n\n- 최신 공지 기준 상태 확인\n- 재현 조건 기록\n- 관련 패치 적용 여부 확인",
+        "faq_items": [
+            {
+                "question": "이 문제를 먼저 어떻게 확인해야 하나요?",
+                "answer": workaround_hint,
+            }
+        ],
+    }
 
 
 def detect_faq_tags(text: str) -> list[str]:

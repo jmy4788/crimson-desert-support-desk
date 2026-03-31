@@ -79,6 +79,20 @@ export function IssueDetailPage() {
             <h3 className="text-2xl font-semibold text-zinc-950">에스컬레이션 기준</h3>
             <p className="mt-4 text-sm leading-7 text-zinc-700">{issue.escalation_recommendation}</p>
           </SectionCard>
+
+          {issue.landing_page?.faq_items.length ? (
+            <SectionCard>
+              <h3 className="text-2xl font-semibold text-zinc-950">핵심 질문</h3>
+              <div className="mt-5 space-y-4">
+                {issue.landing_page.faq_items.map((item) => (
+                  <div key={item.question} className="rounded-[24px] border border-zinc-200 bg-zinc-50 px-5 py-4">
+                    <div className="text-sm font-semibold text-zinc-950">{item.question}</div>
+                    <p className="mt-3 text-sm leading-7 text-zinc-700">{item.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </SectionCard>
+          ) : null}
         </div>
 
         <div className="space-y-6">
@@ -110,4 +124,3 @@ export function IssueDetailPage() {
     </div>
   );
 }
-

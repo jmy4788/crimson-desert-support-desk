@@ -3,7 +3,7 @@ source_type: known_issue
 title: 일부 의뢰 진행 중 다음 목표가 자동으로 추적되지 않는 현상이 확인됩니다.
 source_url: https://crimsondesert.pearlabyss.com/ko-KR/News/Notice/Detail?_boardNo=68
 published_at: '2026-03-19T22:20:00+00:00'
-fetched_at: '2026-03-31T12:17:10.952616+00:00'
+fetched_at: '2026-03-31T13:19:17.237732+00:00'
 slug: 일부-의뢰-진행-중-다음-목표가-자동으로-추적되지-않는-현상이-확인됩니다
 symptom_summary: 일부 의뢰 진행 중 다음 목표가 자동으로 추적되지 않는 현상이 확인됩니다.
 category: progression
@@ -17,6 +17,21 @@ last_seen_at: '2026-03-19T22:20:00+00:00'
 escalation_needed: false
 related_patch_versions: []
 workaround_steps: []
+landing:
+  title: 일부 의뢰 진행 중 다음 목표가 자동으로 추적되지 않는 현상이 확인됩니다.
+  meta_description: 현재 붉은사막에서 게임 플레이 또는 전반적인 이용 경험에 영향을 미칠 수 있는 주요 문제점들에 대해 안내 드립니다. 관련 문제들은 현재 면밀히 확인 중이며, 원인 파악 및 해결을 위해 필요한 조치를 진행하고 있습니다. 본 공지에 포함되지 않은 문제를 겪고 계신 경...
+  canonical_path: /ko/issues/일부-의뢰-진행-중-다음-목표가-자동으로-추적되지-않는-현상이-확인됩니다
+  body_markdown: '일부 의뢰 진행 중 다음 목표가 자동으로 추적되지 않는 현상이 확인됩니다.
+
+
+    - 최신 공지 기준 상태 확인
+
+    - 재현 조건 기록
+
+    - 관련 패치 적용 여부 확인'
+  faq_items:
+  - question: 이 문제를 먼저 어떻게 확인해야 하나요?
+    answer: 최신 패치 적용 여부와 동일 증상 재현 조건을 먼저 기록해 두세요.
 ---
 현재 붉은사막에서 게임 플레이 또는 전반적인 이용 경험에 영향을 미칠 수 있는 주요 문제점들에 대해 안내 드립니다.
 관련 문제들은 현재 면밀히 확인 중이며, 원인 파악 및 해결을 위해 필요한 조치를 진행하고 있습니다.

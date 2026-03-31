@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 
 import { EmptyState } from '../components/EmptyState';
 import { LoadingState } from '../components/LoadingState';
@@ -71,14 +71,22 @@ export function FaqPage() {
             <p className="mt-3 text-sm leading-7 text-zinc-700">{faq.answer}</p>
             <div className="mt-4 flex flex-wrap gap-2 text-xs text-zinc-500">
               {faq.related_issue_slugs.map((slug) => (
-                <span key={slug} className="rounded-full border border-zinc-300 px-3 py-1">
+                <Link
+                  key={slug}
+                  to={`/ko/issues/${slug}`}
+                  className="rounded-full border border-zinc-300 px-3 py-1 transition hover:border-amber-300 hover:bg-amber-50"
+                >
                   issue:{slug}
-                </span>
+                </Link>
               ))}
               {faq.related_patch_versions.map((version) => (
-                <span key={version} className="rounded-full border border-zinc-300 px-3 py-1">
+                <Link
+                  key={version}
+                  to={`/ko/patches/${version}`}
+                  className="rounded-full border border-zinc-300 px-3 py-1 transition hover:border-amber-300 hover:bg-amber-50"
+                >
                   patch:{version}
-                </span>
+                </Link>
               ))}
             </div>
             <div className="mt-5">
@@ -90,4 +98,3 @@ export function FaqPage() {
     </div>
   );
 }
-
