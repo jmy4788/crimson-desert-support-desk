@@ -183,6 +183,15 @@ Practical conclusion:
 - Implemented improved official FAQ extraction logic so one official FAQ notice can now generate multiple FAQ entries instead of a single giant merged entry
 - Implemented automatic landing metadata generation for auto-fetched patch and issue documents
 - Implemented frontend rendering of landing-page FAQ snippets on patch detail and issue detail pages
+- Added `incoming/curated/` manual override flow for high-priority landing pages and FAQ entries
+- Added curated overrides for:
+  - patch `1.01.03`
+  - upscale visual artifact issue
+  - DLSS / Ray Reconstruction frame-drop issue
+  - ROG Xbox Ally X driver launch issue
+  - Xbox fishing Y-axis invert issue
+  - FSR4 rain-scene blur issue
+  - related FAQ pages for blur, performance tech, driver versions, and Xbox PC App launch
 - Verified new fetch pipeline locally with:
   - `Fetched notices: 10`
   - `Generated drafts: 60`
@@ -215,12 +224,12 @@ Practical conclusion:
 
 ## Immediate Next Priorities
 
-1. Push the FAQ and landing enhancement commit to GitHub so Vercel and Render can redeploy from the latest code
+1. Push the curated landing override commit to GitHub so Vercel and Render can redeploy from the latest code
 2. Re-import improved official content into the Render production database
 3. Verify production FAQ detail, patch detail, and issue detail pages after re-import
 4. Add analytics and Search Console
 5. Add custom domain
-6. Curate top issue pages manually before broader launch
+6. Continue manual curation for additional high-intent issue pages before broader launch
 
 ## Resume Prompt
 

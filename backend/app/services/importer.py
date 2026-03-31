@@ -200,6 +200,7 @@ def parse_import_document(path: Path) -> dict[str, Any]:
         "published_at": published_at,
         "fetched_at": fetched_at,
         "raw_text": raw_text,
+        "preserve_source_record": bool(metadata.get("preserve_source_record", False)),
         "normalized_json": {
             "import_path": path.as_posix(),
             "import_type": source_type,

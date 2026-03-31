@@ -17,6 +17,14 @@ def parse_datetime(value: str) -> datetime:
     return datetime.fromisoformat(value)
 
 
+def _match_datetime_shape(value: datetime, reference: datetime) -> datetime:
+    if reference.tzinfo is None and value.tzinfo is not None:
+        return value.replace(tzinfo=None)
+    if reference.tzinfo is not None and value.tzinfo is None:
+        return value.replace(tzinfo=reference.tzinfo)
+    return value
+
+
 def database_is_empty(engine) -> bool:
     with Session(engine) as session:
         count = session.exec(select(func.count()).select_from(Source)).one()
@@ -29,6 +37,7 @@ def read_seed_payload(seed_path: Path) -> dict[str, Any]:
 
 def _upsert_source(session: Session, payload: dict[str, Any]) -> Source:
     published_at = parse_datetime(payload["published_at"])
+    preserve_source_record = bool(payload.get("preserve_source_record", False))
     source = session.exec(
         select(Source).where(
             Source.source_url == payload["source_url"],
@@ -47,11 +56,14 @@ def _upsert_source(session: Session, payload: dict[str, Any]) -> Source:
         )
         session.add(source)
     else:
-        source.source_type = payload["source_type"]
-        source.title = payload["title"]
-        source.fetched_at = parse_datetime(payload["fetched_at"])
-        source.raw_text = payload["raw_text"]
-        source.normalized_json = payload.get("normalized_json", {})
+        next_fetched_at = parse_datetime(payload["fetched_at"])
+        next_fetched_at = _match_datetime_shape(next_fetched_at, source.fetched_at)
+        source.fetched_at = max(source.fetched_at, next_fetched_at)
+        if not preserve_source_record:
+            source.source_type = payload["source_type"]
+            source.title = payload["title"]
+            source.raw_text = payload["raw_text"]
+            source.normalized_json = payload.get("normalized_json", {})
     session.flush()
     return source
 

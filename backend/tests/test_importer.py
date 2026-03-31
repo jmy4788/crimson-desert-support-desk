@@ -3,7 +3,9 @@ from __future__ import annotations
 from pathlib import Path
 
 from fastapi.testclient import TestClient
+from sqlmodel import Session, select
 
+from app.models import Source
 from app.services.importer import import_documents
 
 
@@ -123,3 +125,51 @@ landing:
     issue_payload = issue_response.json()
     assert any(item["version"] == "1.01.03" for item in issue_payload["related_patches"])
     assert issue_payload["landing_page"]["canonical_path"] == "/ko/issues/launcher-crash-after-logo"
+
+
+def test_curated_override_can_preserve_existing_source_record(client: TestClient, tmp_path: Path) -> None:
+    original_file = tmp_path / "faq-auto.md"
+    original_file.write_text(
+        """---
+source_type: faq
+title: "FAQ: 화면이 흐리게 보일 때"
+source_url: "https://www.crimsondesert.com/support/platform-faq-visual"
+published_at: "2026-03-31T09:30:00+09:00"
+fetched_at: "2026-03-31T09:35:00+09:00"
+question: "화면이 흐리게 보일 때는 어떻게 하나요?"
+answer: "공식 FAQ 원문 답변"
+tags:
+  - "graphics"
+---
+공식 FAQ 원문 전체
+""",
+        encoding="utf-8",
+    )
+
+    curated_file = tmp_path / "faq-curated.md"
+    curated_file.write_text(
+        """---
+source_type: faq
+preserve_source_record: true
+title: "FAQ: 화면이 흐리게 보일 때"
+source_url: "https://www.crimsondesert.com/support/platform-faq-visual"
+published_at: "2026-03-31T09:30:00+09:00"
+fetched_at: "2026-03-31T10:05:00+09:00"
+question: "화면이 흐리게 보일 때는 어떻게 하나요?"
+answer: "수작업으로 정리한 답변"
+tags:
+  - "graphics"
+  - "console"
+---
+큐레이션 메모
+""",
+        encoding="utf-8",
+    )
+
+    import_documents(client.app.state.engine, [original_file, curated_file], dry_run=False)
+
+    with Session(client.app.state.engine) as session:
+        source = session.exec(select(Source).where(Source.source_url == "https://www.crimsondesert.com/support/platform-faq-visual")).one()
+
+    assert source.raw_text == "공식 FAQ 원문 전체"
+    assert source.fetched_at.isoformat() == "2026-03-31T10:05:00"
