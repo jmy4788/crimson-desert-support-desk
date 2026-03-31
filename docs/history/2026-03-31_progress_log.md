@@ -187,7 +187,12 @@ Practical conclusion:
   - `Fetched notices: 10`
   - `Generated drafts: 60`
   - FAQ entries now split into multiple documents during draft generation
-- These improvements are committed locally, but production will not reflect them until:
+- Added regression coverage for FAQ extraction and landing payload generation
+- Verified local quality gates:
+  - backend `pytest`: 13 passed
+  - frontend `vitest`: 5 passed
+  - frontend production build: passed
+- These improvements are committed locally and ready to push, but production will not reflect them until:
   1. updated code is pushed
   2. Vercel / Render redeploy
   3. official notices are re-imported into the Render production database
@@ -210,9 +215,9 @@ Practical conclusion:
 
 ## Immediate Next Priorities
 
-1. Improve FAQ extraction so official FAQ turns into multiple usable FAQ entries
-2. Generate or populate landing metadata for top issue and patch detail pages
-3. Re-import improved content into production database
+1. Push the FAQ and landing enhancement commit to GitHub so Vercel and Render can redeploy from the latest code
+2. Re-import improved official content into the Render production database
+3. Verify production FAQ detail, patch detail, and issue detail pages after re-import
 4. Add analytics and Search Console
 5. Add custom domain
 6. Curate top issue pages manually before broader launch
