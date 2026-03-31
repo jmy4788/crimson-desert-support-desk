@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "crimson-desert-support-desk-backend"
+version = "0.1.0"
+description = "FastAPI backend for the Crimson Desert Support Desk MVP."
+requires-python = ">=3.12"
+dependencies = [
+  "beautifulsoup4>=4.12,<5.0",
+  "fastapi>=0.115,<1.0",
+  "httpx>=0.28,<0.29",
+  "psycopg[binary]>=3.2,<3.3",
+  "PyYAML>=6.0,<7.0",
+  "sqlmodel>=0.0.22,<0.0.23",
+  "uvicorn[standard]>=0.34,<0.35",
+  "pydantic-settings>=2.8,<3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

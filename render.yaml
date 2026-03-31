@@ -1,0 +1,29 @@
+databases:
+  - name: crimson-desert-support-desk-db
+    databaseName: crimson_desert_support_desk
+    user: crimson_desert_support_desk
+    plan: free
+
+services:
+  - type: web
+    name: crimson-desert-support-desk-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -e backend
+    startCommand: python scripts/run_backend_server.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: HOST
+        value: 0.0.0.0
+      - key: SUPPORT_DESK_APP_ENV
+        value: prod
+      - key: SUPPORT_DESK_AUTO_SEED_ON_START
+        value: "false"
+      - key: SUPPORT_DESK_DATABASE_URL
+        fromDatabase:
+          name: crimson-desert-support-desk-db
+          property: connectionString
+      - key: SUPPORT_DESK_CORS_ORIGINS
+        sync: false
